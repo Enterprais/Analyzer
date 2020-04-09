@@ -1,7 +1,9 @@
 #ifndef PLOTTER_H
 #define PLOTTER_H
+#define StrPnt CurrentStream->DataArray
 
 #include <QWidget>
+#include "data.h"
 
 namespace Ui {
 class Plotter;
@@ -15,8 +17,31 @@ public:
     explicit Plotter(QWidget *parent = nullptr);
     ~Plotter();
 
+public slots:
+    void RepaintPlot(DataStream *stream);
+    void MoveSlider(int value);
+
 private:
     Ui::Plotter *ui;
+    QPainter *painter;
+    QImage *image;
+
+    int MsPerPixel;
+    int AmpPerPixel;
+    int CurrentNumberStream;
+
+    bool isActive;
+    bool UpdateGraph;
+
+    DataStream *CurrentStream;
+
+    void PaintGrid();
+    void PaintGraph();
+    int clamp(int n, int lower, int upper);
+
+protected:
+     void paintEvent(QPaintEvent *) override;
+     void resizeEvent(QResizeEvent *event) override;
 };
 
 #endif // PLOTTER_H

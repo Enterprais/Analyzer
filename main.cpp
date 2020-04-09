@@ -1,4 +1,6 @@
 #include "mainwindow.h"
+#include "data.h"
+#include "plotter.h"
 
 #include <QApplication>
 
@@ -9,3 +11,4 @@ int main(int argc, char *argv[])
     w.show();
     return a.exec();
 }
+
