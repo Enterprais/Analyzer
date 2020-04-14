@@ -20,5 +20,7 @@ public:
 private:
     Ui::MainWindow *ui;
     QRandomGenerator random;
+
+
 };
 #endif // MAINWINDOW_H

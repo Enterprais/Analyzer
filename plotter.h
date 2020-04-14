@@ -20,14 +20,19 @@ public:
 public slots:
     void RepaintPlot(DataStream *stream);
     void MoveSlider(int value);
+    void rXDown();
+    void rXUp();
+    void rYDown();
+    void rYUp();
+
 
 private:
     Ui::Plotter *ui;
     QPainter *painter;
     QImage *image;
 
-    int MsPerPixel;
-    int AmpPerPixel;
+    float MsPerPixel;
+    float AmpPerPixel;
     int CurrentNumberStream;
 
     bool isActive;

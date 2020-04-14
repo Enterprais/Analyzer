@@ -16,6 +16,7 @@ Plotter::Plotter(QWidget *parent) :
 
     CurrentNumberStream = 0;
     MsPerPixel = 1;
+    AmpPerPixel = 1;
     isActive = true;
     UpdateGraph = true;
 
@@ -110,7 +111,10 @@ void Plotter::PaintGraph()
     painter->setPen(QPen(Qt::GlobalColor::blue, 2));
     for (int i = StartPos; i < EndPos - 1; i++)
     {
-        painter->drawLine(ShiftX*ShiftXNum, image->height()/2 - StrPnt[i], ShiftX*(ShiftXNum+1), image->height()/2 - StrPnt[i+1]);
+        painter->drawLine(ShiftX*ShiftXNum,
+                          image->height()/2 - StrPnt[i]/AmpPerPixel,
+                          ShiftX*(ShiftXNum+1),
+                          image->height()/2 - StrPnt[i+1]/AmpPerPixel);
         ShiftXNum++;
     }
     painter->setPen(currentPen);
@@ -138,4 +142,28 @@ Plotter::~Plotter()
 
 int Plotter::clamp(int n, int lower, int upper) {
   return std::min(upper, std::max(n, lower));
+}
+
+void Plotter::rXUp()
+{
+    this->MsPerPixel+=1;
+    update();
+}
+
+void Plotter::rXDown()
+{
+    this->MsPerPixel-=1;
+    update();
+}
+
+void Plotter::rYUp()
+{
+    this->AmpPerPixel+=0.1f;
+    update();
+}
+
+void Plotter::rYDown()
+{
+    this->AmpPerPixel-=0.1f;
+    update();
 }
