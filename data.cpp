@@ -4,7 +4,7 @@
 void DataStream::AddDataToStream(int Data)
 {
     DataArray.push_back(Data);
-    emit Data::getInstance().DataChanged(this);
+    emit Data::getInstance().DataChanged();
 }
 
 DataStream::DataStream(float Rate)
@@ -14,7 +14,7 @@ DataStream::DataStream(float Rate)
 
 Data::Data()
 {
-    CreateDataStreams(1,25);
+    CreateDataStreams(4,25);
 }
 
 DataStream* Data::GetDataStream(int Number)
@@ -26,7 +26,11 @@ DataStream* Data::GetDataStream(int Number)
 
 void Data::ClearStreams()
 {
-    DataStreams.clear();
+    for(unsigned long i = 0; i < DataStreams.size(); i++)
+    {
+        DataStreams[i].DataArray.clear();
+    }
+
 }
 
 void Data::CreateDataStreams(int Count, float Rate)
@@ -41,6 +45,11 @@ Data& Data::getInstance()
 {
      static Data instance;
      return instance;
+}
+
+std::deque<DataStream> Data::GetData()
+{
+    return DataStreams;
 }
 
 

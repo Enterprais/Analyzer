@@ -1,8 +1,9 @@
-QT       += core gui
+QT += core gui serialport network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
+
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -18,24 +19,32 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     comcontrol.cpp \
     data.cpp \
+    ethcontrol.cpp \
+    exporter.cpp \
     main.cpp \
     mainwindow.cpp \
     plotter.cpp \
-    viewer.cpp
+    settings.cpp
 
 HEADERS += \
     comcontrol.h \
     data.h \
+    ethcontrol.h \
+    exporter.h \
     mainwindow.h \
     plotter.h \
-    viewer.h
+    settings.h
+
 
 FORMS += \
     mainwindow.ui \
-    plotter.ui
+    plotter.ui \
+    settings.ui
 
+include(xlsxlib/src/xlsx/qtxlsx.pri)
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+

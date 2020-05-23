@@ -24,17 +24,29 @@ public slots:
     void rXUp();
     void rYDown();
     void rYUp();
+    void Update();
+    void setGrid(bool sw);
+    QImage GetImage();
 
+signals:
+    void ScanChanged(int X, int Y);
 
 private:
     Ui::Plotter *ui;
     QPainter *painter;
     QImage *image;
 
-    float MsPerPixel;
-    float AmpPerPixel;
+    int BlockSize;
+    float MsPerBlock;
+    float AmpPerBlock;
     int CurrentNumberStream;
 
+    int ScanX[10] = {5, 10, 25, 50, 100, 250, 500, 1000, 2000, 5000};
+    int CurX = 3;
+    int ScanY[14] = {1, 5, 10, 25, 50, 100, 250, 500, 1000, 2000, 5000, 10000, 50000, 100000};
+    int CurY = 7;
+
+    bool isGrid;
     bool isActive;
     bool UpdateGraph;
 

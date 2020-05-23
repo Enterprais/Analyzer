@@ -3,38 +3,37 @@
 
 #include <QObject>
 #include <QWidget>
-#include <QtSerialPort/QSerialPort>
+#include <QSerialPort>
 
-class COMControl : public QObject
+struct s_settings {
+    QString name;
+    qint32 baudRate;
+    QSerialPort::DataBits dataBits;
+    QSerialPort::Parity parity;
+    QSerialPort::StopBits stopBits;
+    QSerialPort::FlowControl flowControl;
+};
+
+class COMControl : public QWidget
 {
     Q_OBJECT
 public:
-    explicit COMControl(QObject *parent = nullptr);
+    explicit COMControl(QWidget *parent = nullptr);
     ~COMControl();
-
-    struct Settings {
-        QString name;
-        qint32 baudRate;
-        QString stringBaudRate;
-        QSerialPort::DataBits dataBits;
-        QString stringDataBits;
-        QSerialPort::Parity parity;
-        QString stringParity;
-        QSerialPort::StopBits stopBits;
-        QString stringStopBits;
-        QSerialPort::FlowControl flowControl;
-        QString stringFlowControl;
-        bool localEchoEnabled;
-    };
-
-private:
-    void OpenPort();
-    void ClosePort();
-    void ReadData();
+    bool OpenPort();
+    bool ClosePort();
+    void SetSetting(s_settings set);
     void WriteData(const QByteArray &data);
+    s_settings GetSetting();
 
     QSerialPort *SerialPort;
-    Settings *Setting;
+
+private:
+    void CheckCon();
+    void ReadData();
+
+    s_settings *Setting;
+    QByteArray buffer;
 
 signals:
 

@@ -2,6 +2,7 @@
 #define DATA_H
 #include <vector>
 #include <QObject>
+#include <deque>
 
 struct DataStream
 {
@@ -19,17 +20,18 @@ class Data: public QObject
 public:
     static Data& getInstance();
     void CreateDataStreams (int Count, float Rate);
+    void ClearStreams();   
+    std::deque<DataStream> GetData();
 
 private:
     Data();
     Data(const Data&);
     Data& operator= (Data&);
-    void ClearStreams();
 
-    std::vector<DataStream> DataStreams;
+    std::deque<DataStream> DataStreams;
 
 signals:
-    void DataChanged(DataStream*);
+    void DataChanged();
 
 public slots:
     DataStream* GetDataStream(int Number);
